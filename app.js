@@ -15,6 +15,10 @@ app.use('/js', express.static(__dirname + 'public/js'));
 app.set('views' ,'./resources/views');
 app.set('view engine', 'ejs');
 
+// Routes
+const newsRouters = require('./resources/routes/news');
+app.use('/', newsRouters);
+
 app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);
 });
