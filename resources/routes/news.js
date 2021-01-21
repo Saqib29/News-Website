@@ -56,4 +56,33 @@ router.get('/:id', async (req, res) => {
 });
 
 
+
+
+router.post('', async (req, res) => {
+    let search = req.body.search;
+    try{
+        const newsAPI = await axios.get(`https://raddy.co.uk/wp-json/wp/v2/posts?search=${search}`);
+        // console.log(newsAPI.data);
+        res.render('searchPage', { articles : newsAPI.data }); 
+
+    }catch(err) {
+        if(err.response) {
+            res.render('searchPage', { articles : null }); 
+
+            console.log(err.response.data);
+            console.log(err.response.status);
+            console.log(err.response.headers);
+        } else if(err.requiest) {
+            res.render('searchPage', { articles : null }); 
+
+            console.log(err.requiest);
+        } else {
+            res.render('searchPage', { articles : null }); 
+
+            console.error('Error', err.message);
+        }
+    }
+});
+
+
 module.exports = router;
